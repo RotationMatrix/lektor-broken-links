@@ -26,7 +26,7 @@ class BrokenLinksPlugin(Plugin):
                     self.paths.append(source.url_path)
 
     def on_after_build_all(self, **extras):
-        print(style("Scanning for broken links", fg='cyan'))
+        print(style("Started link check", fg='cyan'))
         start_time = time()
 
         for source in self.sources:
@@ -45,7 +45,7 @@ class BrokenLinksPlugin(Plugin):
                     print("    " + link)
 
         duration = time() - start_time
-        print(style("Finished scanning links in %.2f" % duration, fg='cyan'))
+        print(style("Finished link check in %.2f sec" % duration, fg='cyan'))
 
     def get_broken_links(self, source):
         broken_links = []
