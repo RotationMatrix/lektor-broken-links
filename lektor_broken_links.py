@@ -5,66 +5,69 @@ from lektor.pluginsystem import Plugin
 from lektor.project import Project
 from lektor.db import Page
 from markdown_links import find_links
+from time import time
 import re
 import os
 
 
 class BrokenLinksPlugin(Plugin):
     name = 'Broken Links'
-    description = u'Add your description here.'
-    broken_links = {}
+    description = u'Find all the broken links!'
+    sources = []
+    paths = []
 
     def on_before_build(self, source, prog, **extras):
-        def check(canonical_link: str, original_link: str):
-            pad = Project.discover().make_env().new_pad()
-
-            if pad.resolve_url_path(canonical_link, include_assets=False) is None:
-                if source not in self.broken_links:
-                    self.broken_links[source] = []
-
-                if original_link not in self.broken_links[source]:
-                    self.broken_links[source].append(original_link)
-
         if type(source) is Page:
             if os.path.exists(source.source_filename):
-                file = open(source.source_filename)
-                text = file.read()
-                file.close()
-                links = find_links(text)
-
-                internal_links = []
-                for link in links:
-                    # Find internal links
-                    if re.match(r'\.{0,2}/.*', link):
-                        if furl(link).path.isabsolute:
-                            dest = furl('/')
-                        else:
-                            dest = furl(source.path)
-
-                        dest.path = (dest.path / link).normalize()
-                        dest = furl('/').join(dest)
-                        internal_links.append((str(dest), link))
-
-                        # print(link, '->', dest)
-
-                del links
-
-                for link in internal_links:
-                    check(link[0], link[1])
+                if source not in self.sources:
+                    self.sources.append(source)
+                
+                if source.url_path not in self.paths:
+                    self.paths.append(source.url_path)
 
     def on_after_build_all(self, **extras):
-        for key in self.broken_links.keys():
-            num_links = len(self.broken_links[key])
-            link = 'links'
+        print(style("Scanning for broken links", fg='cyan'))
+        start_time = time()
 
-            if num_links == 1:
-                link = 'link'
+        for source in self.sources:
+            broken_links = self.get_broken_links(source)
+            num_links = len(broken_links)
 
-            print(style("Found %i broken %s in '%s':" %
-                        (num_links, link, key.path), fg='red'))
+            if num_links > 0:
+                link = 'links'
+                if num_links == 1:
+                    link = 'link'
 
-            for link in self.broken_links[key]:
-                print("    " + link)
+                print(style("Found %i broken %s in '%s':" %
+                            (num_links, link, source.path), fg='red'))
 
-        # Clear the dict so it doesn't show up on the next build.
-        self.broken_links.clear()
+                for link in broken_links:
+                    print("    " + link)
+
+        duration = time() - start_time
+        print(style("Finished scanning links in %.2f" % duration, fg='cyan'))
+
+    def get_broken_links(self, source):
+        broken_links = []
+        file = open(source.source_filename)
+        text = file.read()
+        file.close()
+        links = find_links(text)
+
+        for link in links:
+            # Find internal links
+            if re.match(r'\.{0,2}/.*', link):
+                if furl(link).path.isabsolute:
+                    dest = furl('/')
+                else:
+                    dest = furl(source.path)
+
+                dest.path = (dest.path / link / '/').normalize()
+                dest = furl('/').join(dest)
+
+                if str(dest) not in self.paths:
+                    broken_links.append(link)
+
+                # print(link, '->', dest)
+
+        return broken_links
