@@ -2,7 +2,6 @@
 from furl import furl
 from click import style
 from lektor.pluginsystem import Plugin
-from lektor.project import Project
 from lektor.db import Page
 from markdown_links import find_links
 from time import time
@@ -49,10 +48,8 @@ class BrokenLinksPlugin(Plugin):
 
     def get_broken_links(self, source):
         broken_links = []
-        file = open(source.source_filename)
-        text = file.read()
-        file.close()
-        links = find_links(text)
+        with open(source.source_filename) as f:
+            links = find_links(f.read())
 
         for link in links:
             # Find internal links
