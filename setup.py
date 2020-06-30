@@ -17,7 +17,7 @@ setup(
     author='RotationMatrix',
     author_email='52428419+RotationMatrix@users.noreply.github.com',
     description=description,
-    keywords='Lektor plugin',
+    keywords='Lektor broken links plugin',
     license='MIT-License',
     long_description=readme,
     long_description_content_type='text/markdown',
