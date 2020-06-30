@@ -11,7 +11,7 @@ import os
 
 class BrokenLinksPlugin(Plugin):
     name = 'Broken Links'
-    description = u'Find all the broken links!'
+    description = u'Find all the broken links in your Lektor site!'
     sources = []
     paths = []
 
