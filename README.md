@@ -9,14 +9,14 @@ Currently it's only smart enough to check internal links, but it's considering g
 ## Getting Started
 
 Broken Links depends on the following packages...
-* `markdown-it-py -= 0.4.5`
-* `click -= 7.0`
-* `furl -= 2.1.0`
+* `mistune >= 0.7.0, <2`
+* `click >= 7.0`
+* `furl >= 2.1.0`
 
 ...which can be easily installed with...
 
 ```
-$ pip install markdown-it-py click furl
+$ pip install mistune click furl
 ```
 
 Once dependencies are installed, you can add Broken Links to your Lektor project with...
