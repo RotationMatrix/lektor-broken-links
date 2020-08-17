@@ -12,8 +12,10 @@ import os
 class BrokenLinksPlugin(Plugin):
     name = 'Broken Links'
     description = u'Find all the broken links in your Lektor site!'
-    sources = []
-    paths = []
+
+    def on_before_build_all(self, builder):
+        self.sources = []
+        self.paths = []
 
     def on_before_build(self, source, prog, **extras):
         if type(source) is Page:
