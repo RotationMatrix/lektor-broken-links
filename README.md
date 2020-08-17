@@ -2,9 +2,14 @@
 
 *Find all the broken links!*
 
-Broken Links trys to help you detect broken links in your [Lektor](https://www.getlektor.com/) site.
+Broken Links helps you detect broken links in your [Lektor](https://www.getlektor.com/) site.
 
 Currently it's only smart enough to check internal links, but it's considering getting a degree in external link detection.
+
+## Goals
+
+- Fast - Less than 1 second to check sites with hundreds of pages.
+- Simple - Install on your site and it quietly runs on every build.
 
 ## Getting Started
 
@@ -44,3 +49,8 @@ Started prune
 Finished prune in 0.00 sec
 ```
 *Example output from building [the test site](https://github.com/RotationMatrix/broken-links-tests).*
+
+## Contributing
+
+Thank you for your interest in this project! If you find a bug or have an idea for an awesome new feature please open an issue.
+Pull Requests which help close issues are welcome!
