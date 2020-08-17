@@ -1,25 +1,19 @@
-from markdown_it import MarkdownIt
+import mistune
 import sys
 
+
+class LinkScraper(mistune.Renderer):
+    def __init__(self):
+        super().__init__()
+        self.links = []
+
+    def link(self, link, title=None, text=None):
+        self.links.append(link)
+
+
 def find_links(text: str):
-    md = MarkdownIt()
-    tokens = md.parse(text)
+    renderer = LinkScraper()
+    markdown = mistune.Markdown(renderer)
+    markdown(text)
 
-    # Conduct a breadth-first search for 'link_open' tokens.
-    links = []
-    stack = tokens
-    while len(stack) > 0:
-        # Copy the stack to a working stack and prep for the next loop.
-        current_stack = stack.copy()
-        stack.clear()
-
-        for token in current_stack:
-            # Capture any link destinations.
-            if token.type == 'link_open':
-                links.append(token.attrs[0][1])
-
-            # Add any children to the stack for the next loop.
-            if token.children != None:
-                stack.extend(token.children)
-
-    return links
+    return renderer.links

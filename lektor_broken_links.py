@@ -20,7 +20,7 @@ class BrokenLinksPlugin(Plugin):
             if os.path.exists(source.source_filename):
                 if source not in self.sources:
                     self.sources.append(source)
-                
+
                 if source.url_path not in self.paths:
                     self.paths.append(source.url_path)
 

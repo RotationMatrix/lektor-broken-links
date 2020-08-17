@@ -36,5 +36,5 @@ setup(
             'broken-links = lektor_broken_links:BrokenLinksPlugin',
         ]
     },
-    install_requires=['markdown-it-py>=0.4.5', 'click>=7.0', 'furl>=2.1.0']
+    install_requires=['mistune>=0.7.0,<2', 'click>=7.0', 'furl>=2.1.0']
 )
