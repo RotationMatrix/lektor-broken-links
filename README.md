@@ -48,7 +48,7 @@ Finished build in 0.03 sec
 Started prune
 Finished prune in 0.00 sec
 ```
-*Example output from building [the test site](https://github.com/RotationMatrix/broken-links-tests).*
+*Example output from building [the test site](https://github.com/RotationMatrix/lektor-broken-links-tests).*
 
 ## Contributing
 
