@@ -24,12 +24,15 @@ setup(
     name='lektor-broken-links',
     packages=find_packages(),
     py_modules=['lektor_broken_links'],
-    # url='[link to your repository]',
+    url='https://github.com/RotationMatrix/lektor-broken-links',
     version='0.1',
     classifiers=[
         'Framework :: Lektor',
         'Environment :: Plugins',
         'License :: OSI Approved :: MIT License',
+        'Operating System :: OS Independent',
+        'Programming Language :: Python :: 3',
+        'Topic :: Internet :: WWW/HTTP :: Site Management :: Link Checking',
     ],
     entry_points={
         'lektor.plugins': [
