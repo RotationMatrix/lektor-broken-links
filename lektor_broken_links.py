@@ -31,11 +31,11 @@ class BrokenLinksPlugin(Plugin):
     name = 'Broken Links'
     description = u'Find all the broken links in your Lektor site!'
 
-    def on_before_build_all(self, builder):
+    def on_before_build_all(self, builder, **extra):
         self.sources = []
         self.paths = []
 
-    def on_before_build(self, source, prog, **extras):
+    def on_before_build(self, source, prog, **extra):
         if type(source) is Page:
             if os.path.exists(source.source_filename):
                 if source not in self.sources:
@@ -44,7 +44,7 @@ class BrokenLinksPlugin(Plugin):
                 if source.url_path not in self.paths:
                     self.paths.append(source.url_path)
 
-    def on_after_build_all(self, **extras):
+    def on_after_build_all(self, **extra):
         print(style("Started link check", fg='cyan'))
         start_time = time()
 
