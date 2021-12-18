@@ -15,7 +15,6 @@ with open('lektor_broken_links.py', 'rb') as f:
 
 setup(
     author='RotationMatrix',
-    author_email='52428419+RotationMatrix@users.noreply.github.com',
     description=description,
     keywords='Lektor broken links plugin',
     license='MIT-License',
