@@ -2,9 +2,7 @@
 
 *Find all the broken links!*
 
-Broken Links helps you detect broken links in your [Lektor](https://www.getlektor.com/) site.
-
-Currently it's only smart enough to check internal links, but it's considering getting a degree in external link detection.
+Broken Links helps you detect broken links in your [Lektor](https://www.getlektor.com/) site. It will warn you about broken internal and external HTTP links.
 
 ## Goals
 
