@@ -65,7 +65,11 @@ class BrokenLinksPlugin(Plugin):
                     style(f"Found {num_links} broken {link} in '{source.path}':", fg="red"))
 
                 for link in broken_links:
-                    print("    " + link)
+                    if link[1] is None and link[2] is None:
+                        print('    ' + link[0])
+                    else:
+                        print(
+                            '    ' + link[0] + ' ' + '(HTTP ' + str(link[1]) + ' ' + link[2] + ')')
 
         duration = time() - start_time
         print(style(f"Finished link check in {duration:.2} sec", fg="cyan"))
@@ -87,6 +91,22 @@ class BrokenLinksPlugin(Plugin):
                 dest = furl("/").join(dest)
 
                 if str(dest) not in self.paths:
-                    broken_links.append(link)
+                    broken_links.append([link, None, None])
+
+            # Find external HTTP links.
+            elif re.match(r'https?://.*', link):
+                status_code = 0
+                status_reason = ''
+
+                try:
+                    with urllib.request.urlopen(link) as response:
+                        status_code = response.status
+                        status_reason = response.reason
+                except urllib.error.HTTPError as error:
+                    status_code = error.code
+                    status_reason = error.reason
+
+                if status_code != 200:
+                    broken_links.append([link, status_code, status_reason])
 
         return broken_links
