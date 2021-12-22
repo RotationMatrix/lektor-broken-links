@@ -35,6 +35,25 @@ class BrokenLinksPlugin(Plugin):
         self.sources = []
         self.paths = []
 
+        self.check_external_links = False
+        try:
+            if os.environ["CHECK_EXT_LINKS"] == "1":
+                self.check_external_links = True
+        except KeyError:
+            selection = " "
+            # Repeat until the user enters a new line, Y or N.
+            while not re.fullmatch(r"([YyNn].*)?", selection):
+                print("Check for broken external links?")
+                selection = input(
+                    "This will make HTTP requests to links in this project. [Y/n]: ")
+
+            # Check external links unless the user instructs us not to.
+            if not re.match(r"[Nn].*", selection):
+                self.check_external_links = True
+                print("You can silence this prompt by setting CHECK_EXT_LINKS=1.")
+            else:
+                print("You can silence this prompt by setting CHECK_EXT_LINKS=0.")
+
     def on_before_build_all(self, builder, **extra):
         self.sources = []
         self.paths = []
@@ -94,7 +113,7 @@ class BrokenLinksPlugin(Plugin):
                     broken_links.append([link, None, None])
 
             # Find external HTTP links.
-            elif re.match(r'https?://.*', link):
+            elif self.check_external_links and re.match(r'https?://.*', link):
                 status_code = 0
                 status_reason = ''
 
