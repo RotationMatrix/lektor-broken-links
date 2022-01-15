@@ -61,14 +61,14 @@ class BrokenLinksPlugin(Plugin):
                 if num_links == 1:
                     link = 'link'
 
-                print(style("Found %i broken %s in '%s':" %
-                            (num_links, link, source.path), fg='red'))
+                print(
+                    style(f"Found {num_links} broken {link} in '{source.path}':", fg='red'))
 
                 for link in broken_links:
                     print("    " + link)
 
         duration = time() - start_time
-        print(style("Finished link check in %.2f sec" % duration, fg='cyan'))
+        print(style(f"Finished link check in {duration:.2} sec", fg='cyan'))
 
     def get_broken_links(self, source):
         broken_links = []
