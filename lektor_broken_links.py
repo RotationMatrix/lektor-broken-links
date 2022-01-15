@@ -40,7 +40,7 @@ class BrokenLinksPlugin(Plugin):
         self.paths = []
 
     def on_before_build(self, source, prog, **extra):
-        if type(source) is Page:
+        if isinstance(source, Page):
             if os.path.exists(source.source_filename):
                 if source not in self.sources:
                     self.sources.append(source)
