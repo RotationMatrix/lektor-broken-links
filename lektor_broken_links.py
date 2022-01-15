@@ -7,7 +7,6 @@ from time import time
 import mistune
 import os
 import re
-import sys
 
 
 class LinkScraper(mistune.Renderer):
