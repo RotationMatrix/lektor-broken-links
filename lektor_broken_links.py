@@ -72,7 +72,7 @@ class BrokenLinksPlugin(Plugin):
 
     def get_broken_links(self, source):
         broken_links = []
-        with open(source.source_filename) as f:
+        with open(source.source_filename, encoding="utf-8") as f:
             links = find_links(f.read())
 
         for link in links:
