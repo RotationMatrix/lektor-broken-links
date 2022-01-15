@@ -89,6 +89,4 @@ class BrokenLinksPlugin(Plugin):
                 if str(dest) not in self.paths:
                     broken_links.append(link)
 
-                # print(link, '->', dest)
-
         return broken_links
