@@ -31,6 +31,11 @@ class BrokenLinksPlugin(Plugin):
     name = 'Broken Links'
     description = u'Find all the broken links in your Lektor site!'
 
+    def __init__(self, env, plugin_id):
+        super().__init__(env, plugin_id)
+        self.sources = []
+        self.paths = []
+
     def on_before_build_all(self, builder, **extra):
         self.sources = []
         self.paths = []
