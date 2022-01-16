@@ -27,8 +27,8 @@ def find_links(text: str):
 
 
 class BrokenLinksPlugin(Plugin):
-    name = 'Broken Links'
-    description = u'Find all the broken links in your Lektor site!'
+    name = "Broken Links"
+    description = "Find all the broken links in your Lektor site!"
 
     def __init__(self, env, plugin_id):
         super().__init__(env, plugin_id)
@@ -49,7 +49,7 @@ class BrokenLinksPlugin(Plugin):
                     self.paths.append(source.url_path)
 
     def on_after_build_all(self, **extra):
-        print(style("Started link check", fg='cyan'))
+        print(style("Started link check", fg="cyan"))
         start_time = time()
 
         for source in self.sources:
@@ -57,18 +57,18 @@ class BrokenLinksPlugin(Plugin):
             num_links = len(broken_links)
 
             if num_links > 0:
-                link = 'links'
+                link = "links"
                 if num_links == 1:
-                    link = 'link'
+                    link = "link"
 
                 print(
-                    style(f"Found {num_links} broken {link} in '{source.path}':", fg='red'))
+                    style(f"Found {num_links} broken {link} in '{source.path}':", fg="red"))
 
                 for link in broken_links:
                     print("    " + link)
 
         duration = time() - start_time
-        print(style(f"Finished link check in {duration:.2} sec", fg='cyan'))
+        print(style(f"Finished link check in {duration:.2} sec", fg="cyan"))
 
     def get_broken_links(self, source):
         broken_links = []
@@ -77,14 +77,14 @@ class BrokenLinksPlugin(Plugin):
 
         for link in links:
             # Find internal links (i.e. anything without a protocol://)
-            if re.match(r'([^:]|:(?!//))', link):
+            if re.match(r"([^:]|:(?!//))", link):
                 if furl(link).path.isabsolute:
-                    dest = furl('/')
+                    dest = furl("/")
                 else:
                     dest = furl(source.path)
 
-                dest.path = (dest.path / link / '/').normalize()
-                dest = furl('/').join(dest)
+                dest.path = (dest.path / link / "/").normalize()
+                dest = furl("/").join(dest)
 
                 if str(dest) not in self.paths:
                     broken_links.append(link)
