@@ -7,6 +7,7 @@ from time import time
 import mistune
 import os
 import re
+import urllib
 
 
 class LinkScraper(mistune.Renderer):
