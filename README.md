@@ -48,6 +48,13 @@ Finished prune in 0.00 sec
 ```
 *Example output from building [the test site](https://github.com/RotationMatrix/lektor-broken-links-tests).*
 
+## External Link Checking
+
+This plugin can now also check external HTTP links. This feature is currently
+disabled by default to preserve your privacy when cloning a new project, but
+this can be enabled by setting `CHECK_EXT_LINKS` to `1`. Alternatively, you can
+set it to `ask` to receive a prompt on each run.
+
 ## Contributing
 
 Thank you for your interest in this project! If you find a bug or have an idea for an awesome new feature please open an issue.
