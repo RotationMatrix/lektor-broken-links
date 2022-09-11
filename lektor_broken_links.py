@@ -27,6 +27,21 @@ def find_links(text: str):
     return renderer.links
 
 
+def prompt_external_links():
+    selection = " "
+    # Repeat until the user enters a new line, Y or N.
+    while not re.fullmatch(r"([YyNn].*)?", selection):
+        print("Check for broken external links?")
+        selection = input(
+            "This will make HTTP requests to links in this project. [Y/n]: ")
+
+    # Check external links unless the user instructs us not to.
+    if not re.match(r"[Nn].*", selection):
+        return True
+    else:
+        return False
+
+
 class BrokenLinksPlugin(Plugin):
     name = "Broken Links"
     description = "Find all the broken links in your Lektor site!"
@@ -40,20 +55,10 @@ class BrokenLinksPlugin(Plugin):
         try:
             if os.environ["CHECK_EXT_LINKS"] == "1":
                 self.check_external_links = True
+            elif os.environ["CHECK_EXT_LINKS"] == "ask":
+                self.check_external_links = prompt_external_links()
         except KeyError:
-            selection = " "
-            # Repeat until the user enters a new line, Y or N.
-            while not re.fullmatch(r"([YyNn].*)?", selection):
-                print("Check for broken external links?")
-                selection = input(
-                    "This will make HTTP requests to links in this project. [Y/n]: ")
-
-            # Check external links unless the user instructs us not to.
-            if not re.match(r"[Nn].*", selection):
-                self.check_external_links = True
-                print("You can silence this prompt by setting CHECK_EXT_LINKS=1.")
-            else:
-                print("You can silence this prompt by setting CHECK_EXT_LINKS=0.")
+            self.check_external_links = False
 
     def on_before_build_all(self, builder, **extra):
         self.sources = []
