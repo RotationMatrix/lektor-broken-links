@@ -24,7 +24,7 @@ setup(
     packages=find_packages(),
     py_modules=['lektor_broken_links'],
     url='https://github.com/RotationMatrix/lektor-broken-links',
-    version='0.1.1',
+    version='0.1.2',
     classifiers=[
         'Framework :: Lektor',
         'Environment :: Plugins',
