@@ -77,7 +77,7 @@ class BrokenLinksPlugin(Plugin):
 
         for link in links:
             # Find internal links (i.e. anything without a protocol://)
-            if re.match(r"([^:]|:(?!//))", link):
+            if re.match(r"^([^:]|:(?!//))+$", link):
                 if furl(link).path.isabsolute:
                     dest = furl("/")
                 else:
